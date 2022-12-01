@@ -1,14 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <title>メイン</title>
 </head>
+
 <body>
-    <h1>メインページ</h1>
-    <script src="/js/main.js"></script>
+    <div>ここにゲージを表示する</div>
+    <div>
+        <div>作業内容</div>
+        <input type="text" id="work_content" />
+    </div>
+    <div>
+        <div>使うハート</div>
+        <input type="number" id="decrease_of_heart" />
+    </div>
+    <div>
+        <button type="button" id="register">作業登録</button>
+    </div>
+    <button type="button" id="update">更新</button>
+
+    <ul id="output"></ul>
+    <div id="clickcount"></div><span>次の総ハートを表示している</span>
+
+    <button id="move">移動</button>
+
+    <script type="module" src="/js/main2.js"></script>
 </body>
+
 </html>
