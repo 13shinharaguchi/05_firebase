@@ -26,33 +26,30 @@ function convertTimestampToDatetime(timestamp) {
 }
 
 
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
+// $('#heart_send_button').on("click", function () {
+//     location.href = '/html/main.html'
+// })
 
-//送信ボタンを押したときの処理
-$('#register').on('click', function () {
+
+
+$('#heart_send_button').on('click', function () {
     //オブジェクト形式にする
     const postData = {
-        work: $('#work_content').val(),
-        decrease_of_heart: $('#decrease_of_heart').val(),
+        gain_of_heart: $('#gain_of_heart').val(),
         time: serverTimestamp(),
     };
 
     //どこになにをおくるのか
-    addDoc(collection(db, "my_heart_decrease"), postData);
-    $('#work_content').val('');
-    $('#decrease_of_heart').val('');
-    
+    addDoc(collection(db, "my_heart_gain"), postData);
+    $('#gain_of_heart').val('');
 })
 
 //ハートの本体を表示
-function fuga() {
-    
-}
 const q = query(collection(db, "my_heart"), orderBy('time', 'asc'))
 onSnapshot(q, (querySnapshot) => {
 
@@ -87,13 +84,13 @@ onSnapshot(q, (querySnapshot) => {
     //htmlの文字を取得する
     const kari = $('#output').text();
     var shi_N = Number(kari)
-    console.log("マイハートの総計",shi_N)
-    ga(shi_N)
+    console.log("マイハートの総計", shi_N)
+    // ga(shi_N)
 });
 
-//ハートがマイナスになるを表示
+//ハートがプラスになるを表示
 function ga(hoge) {
-    const q_mhd = query(collection(db, "my_heart_decrease"), orderBy('time', 'asc'))
+    const q_mhd = query(collection(db, "my_heart_gain"), orderBy('time', 'asc'))
 
     onSnapshot(q_mhd, (querySnapshot) => {
 
@@ -117,7 +114,7 @@ function ga(hoge) {
         documents.forEach(function (document) {
             htmlElements.push(`
   
-            ${document.data.decrease_of_heart}
+            ${document.data.gain_of_heart}
     
              `);
         });
@@ -126,36 +123,13 @@ function ga(hoge) {
         const shin = htmlElements.slice(-1)[0]
         //aaaは入力された数値
         var aaa = Number(shin)
-        console.log("aaa",aaa)
+        console.log("aaa", aaa)
         //fgnは総ハート数ひく入力された数  つまり次の総ハート
-        var fgn = hoge - aaa
+        var fgn = hoge + aaa
         console.log(fgn)
         $('#clickcount').text(fgn)
-       
+
     });
 
-    
+
 }
-
-//一覧画面に移動する
-$('#update').on("click", function () {
-    // location.href = '/html/list.html'
-    total_heart()
-})
-
-function total_heart() {
-  const t_h = $('#clickcount').text()
-    const postData = {
-        number_of_heart: t_h,
-        time: serverTimestamp(),
-    };
-
-    //どこになにをおくるのか
-    addDoc(collection(db, "my_heart"), postData);
-}
-
-
-//一覧画面に移動する
-$('#move').on("click", function () {
-    location.href = '/html/list.html'
-})
