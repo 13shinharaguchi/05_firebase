@@ -11,6 +11,7 @@ import {
     setDoc,
     doc,
     getDoc,
+    updateDoc,
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-firestore.js";
 
 // 日時をいい感じの形式にする関数
@@ -29,7 +30,6 @@ function convertTimestampToDatetime(timestamp) {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 
 //作業ハートを登録する
@@ -42,125 +42,61 @@ $('#register').on('click', function () {
     };
 
     //どこになにをおくるのか
-    addDoc(collection(db, "my_heart_decrease"), postData);
+    // addDoc(collection(db, "my_heart_decrease"), postData);
+
+    //ドキュメントIDを指定して、更新する形をとった
+    const docRef = doc(db, "my_heart_decrease", "5nLihgsxnifdtNP2XLcM");
+    updateDoc(docRef, postData);
+
     $('#work_content').val('');
     $('#decrease_of_heart').val('');
-
-})
-
-
-//総合ハートの取得する 完了
-const docRef = doc(db, "my_heart","2tsujCrhJSttVgNMp1pC");
-const docSnap = await getDoc(docRef);
-let Comprehensive_heart = docSnap.data()
-console.log(Comprehensive_heart.number_of_heart)
-
-//使用するハート数を取得する
-const q_mhd = query(collection(db, "my_heart_decrease"), orderBy('time', 'asc'))
-
-onSnapshot(q_mhd, (querySnapshot) => {
-
-
-    //入れる配列準備
-    const documents = []
-
-    //回して配列にいれる、使える状態にする
-    querySnapshot.docs.forEach(function (doc) {
-        const document = {
-            id: doc.id,
-            data: doc.data(),
-        };
-        documents.push(document);
-    })
-
-
-    //画面を表示するために配列に入れる
-    //時間系列の関数をいれてあげる
-    const htmlElements = [];
-    documents.forEach(function (document) {
-        htmlElements.push(`
-  
-            ${document.data.decrease_of_heart}
     
-             `);
-    });
-
-    //配列の一番新しいものを引き抜く
-    const shin = htmlElements.slice(-1)[0]
-    let decrase_number = Number(shin)
-    console.log(decrase_number)
-    $('#clickcount').text(decrase_number)
-});
-
-//更新
-$('#update').on("click", function () {
-    // location.href = '/html/list.html'
-    total_heart()
+    my_heart_get()
+    
 })
 
-function total_heart() {
-    const t_h = $('#clickcount').text()
-    const postData = {
-        number_of_heart: t_h,
+//リアルタイムをつぶしてしまっている
+async function my_heart_get() {
+    //総合ハートの取得する
+    //マイハートのドキュメントを指定して、取得する（getdoc）
+    const docRe = doc(db, "my_heart", "2tsujCrhJSttVgNMp1pC");
+    const docSnap = await getDoc(docRe);
+    let C_heart = docSnap.data()
+    let Comprehensive_heart = C_heart.number_of_heart
+    let Comprehensive_heart_number = Number(Comprehensive_heart)
+    console.log(Comprehensive_heart_number)
+  
+
+    //使用するハートを取得する
+    //my_heart_decreaseのドキュメントを指定して、取得する（getdoc）
+    const decrase_c = doc(db, "my_heart_decrease", "5nLihgsxnifdtNP2XLcM");
+    const docdecrase = await getDoc(decrase_c);
+    let decrase_haert = docdecrase.data()
+    let decrease_of_heart = decrase_haert.decrease_of_heart
+    let decrease_of_heart_number = Number(decrease_of_heart)
+    console.log(decrease_of_heart_number)
+   
+
+    //総合ハート - 使用するハートを表現する
+    let Comprehensive_heart_number_v2 = Comprehensive_heart_number - decrease_of_heart_number
+    console.log(Comprehensive_heart_number_v2)
+
+    const my_heart_doc = doc(db, "my_heart", "2tsujCrhJSttVgNMp1pC");
+    const new_data = {
+        number_of_heart: Comprehensive_heart_number_v2,
         time: serverTimestamp(),
     };
 
-    //どこになにをおくるのか
-    addDoc(collection(db, "my_heart"), postData);
+    updateDoc(my_heart_doc, new_data);
 }
 
+const q = query(collection(db, "my_heart"), orderBy('time', 'asc'))
+onSnapshot(q, () => { 
+console.log("sss")
+})
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-//クエリの作成  変数qを作成する, queryの挙動があまりわからん
-//orderByでならびかえ
-//timeはfirebaseのコレクションの名前になるのか
-// const q = query(collection(db, "chat"), orderBy('time', 'desc'))
-
-// onSnapshot(q, (querySnapshot) => {
-//     console.log('単純に取得した状態のコンソール', querySnapshot.docs)
-
-//     //入れる配列準備
-//     const documents = []
-
-//     //回して配列にいれる、使える状態にする
-//     querySnapshot.docs.forEach(function (doc) {
-//         const document = {
-//             id: doc.id,
-//             data: doc.data(),
-//         };
-//         documents.push(document);
-//     })
-
-//     console.log('使える状態の配列になるか確かめのコンソール', documents);
-
-
-//     //画面を表示するために配列に入れる
-//     //時間系列の関数をいれてあげる
-    
-//     const htmlElements = [];
-//     documents.forEach(function (document) {
-//         htmlElements.push(`
-//       <li id="${document.id}">
-//       <p>${document.data.name} at ${convertTimestampToDatetime(document.data.time.seconds)}</p>
-//       <p>${document.data.text}</p>
-//       <p>${document.data.gaku}</p>
-//     </li>
-//         `);
-//     });
-
-//     $("#output").html(htmlElements);
-
-// });
+//一覧画面に移動する
+$('#move').on("click", function () {
+    location.href = '/html/list.html'
+})

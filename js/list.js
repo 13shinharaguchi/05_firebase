@@ -26,6 +26,7 @@ function convertTimestampToDatetime(timestamp) {
 }
 
 
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
@@ -133,3 +134,8 @@ function ga(hoge) {
 
 
 }
+
+//一覧画面に移動する
+$('#move').on("click", function () {
+    location.href = '/html/main.html'
+})
