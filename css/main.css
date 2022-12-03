@@ -1,3 +1,72 @@
-#clickcount{
-    background-color: brown;
+body {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    background-color:darksalmon;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.main_wrapper {
+    display: flex;
+}
+
+.input_area {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.button_area {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.button_s {
+    display: flex;
+    justify-content: end;
+}
+
+#register {
+    margin-right: 30px;
+}
+
+.register_area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column
+}
+
+#work_content {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.text_area {
+    width: 300px;
+    height: 400px;
+    padding: 10px;
+}
+
+#decrease_of_heart {
+    width: 300px;
+    padding: 10px;
+}
+

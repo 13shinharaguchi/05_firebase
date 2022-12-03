@@ -11,19 +11,34 @@
 </head>
 
 <body>
-    <!-- <select name="人を選ぶ" id="select_user">
-        <option value="sample">ここはuser名にする</option>
-        <option value="sample">サンプル1</option>
-    </select> -->
-    <div>
-        <div>送るハート</div>
-        <input type="number" id="gain_of_heart" />
-    </div>
-    <button type="button" id="heart_send_button">ハートを送る</button>
+    <div class="main_wrapper">
+        <div class="input_area">
+            <div>ここにはみんなの総ハート一覧がでる</div>
+            <div id="output"></div>
+        </div>
+        <div class="button_area">
+            <select name="" id="">
+                <option value="sample">サンプル1</option>
+                05
+                <option value="sample">サンプル2</option>
+                06
+                <option value="sample">サンプル3</option>
+                07
+                <option value="sample">サンプル4</option>
+                08
+                <option value="sample">サンプル5</option>
 
-    <ul id="output"></ul>
-    <div id="clickcount"></div>
-    <button id="move">別の人の画面に移動</button>
+            </select>
+            <p>送るハート</p>
+            <input type="number" id="gain_of_heart" pattern="^[0-9]+$" />
+            <div class="button_s">
+                <button type="button" id="heart_send_button">ハートを送る</button>
+                <button id="move">別の人の画面に移動</button>
+            </div>
+        </div>
+
+
+    </div>
     <script type="module" src="/js/list.js"></script>
 </body>
 

@@ -26,6 +26,7 @@ function convertTimestampToDatetime(timestamp) {
     return `${Y}/${m}/${d} ${H}:${i}:${s}`;
 }
 
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -48,6 +49,7 @@ $('#register').on('click', function () {
 
     $('#work_content').val('');
     $('#decrease_of_heart').val('');
+    $('.text_area').val('');
     
     my_heart_get_decrase()
     

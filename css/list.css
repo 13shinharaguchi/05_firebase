@@ -1,0 +1,45 @@
+body {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    background-color: darkgrey;
+    ;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.main_wrapper {
+    display: flex;
+}
+
+.input_area {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.button_area {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#gain_of_heart {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
