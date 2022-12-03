@@ -26,8 +26,6 @@ function convertTimestampToDatetime(timestamp) {
     return `${Y}/${m}/${d} ${H}:${i}:${s}`;
 }
 
-
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -51,12 +49,12 @@ $('#register').on('click', function () {
     $('#work_content').val('');
     $('#decrease_of_heart').val('');
     
-    my_heart_get()
+    my_heart_get_decrase()
     
 })
 
 //リアルタイムをつぶしてしまっている
-async function my_heart_get() {
+async function my_heart_get_decrase() {
     //総合ハートの取得する
     //マイハートのドキュメントを指定して、取得する（getdoc）
     const docRe = doc(db, "my_heart", "2tsujCrhJSttVgNMp1pC");
@@ -90,10 +88,39 @@ async function my_heart_get() {
     updateDoc(my_heart_doc, new_data);
 }
 
+//ハートの本体を表示
 const q = query(collection(db, "my_heart"), orderBy('time', 'asc'))
-onSnapshot(q, () => { 
-console.log("sss")
-})
+onSnapshot(q, (querySnapshot) => {
+
+    //入れる配列準備
+    const C_documents = []
+
+    //回して配列にいれる、使える状態にする
+    querySnapshot.docs.forEach(function (doc) {
+        const C_document = {
+            id: doc.id,
+            data: doc.data(),
+        };
+        C_documents.push(C_document);
+    })
+
+    //画面を表示するために配列に入れる
+    //時間系列の関数をいれてあげる
+    const C_htmlElements = [];
+    C_documents.forEach(function (mh) {
+        C_htmlElements.push(`
+  
+            ${mh.data.number_of_heart}
+    
+             `);
+    });
+
+    //配列の一番新しいものを引き抜く
+    const Comprehensive_number = C_htmlElements.slice(-1)[0]
+    var cm = Number(Comprehensive_number)
+    $("#output").html(cm);
+    console.log("総計ハート",cm)
+});
 
 
 //一覧画面に移動する
