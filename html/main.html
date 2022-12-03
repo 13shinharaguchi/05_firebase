@@ -7,27 +7,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>メイン</title>
 </head>
 
 <body>
-    <div>ここにゲージを表示する</div>
-    <div>
-        <div>作業内容</div>
-        <input type="text" id="work_content" />
-    </div>
-    <div>
-        <div>使うハート</div>
-        <input type="number" id="decrease_of_heart" />
-    </div>
-    <div>
-        <button type="button" id="register">作業登録</button>
-    </div>
+    <div class="main_wrapper">
+        <div class="input_area">
+            <div >
+                <p>ここにゲージを表示する</p>
+                <div id="output"></div>
+            </div>
 
-    <ul id="output"></ul>
-    <div id="clickcount"></div>
+            <div class="register_area">
+                <p>作業内容</p>
+                <input type="text" id="work_content" />
+                <textarea name="" class="text_area"></textarea>
+            </div>
 
-    <button id="move">別の人の画面に移動</button>
+            <div>
+                <div>使用するハート</div>
+                <input type="number" id="decrease_of_heart" pattern=/^([1-9]\d*|0)$/ />
+            </div>
+        </div>
+        <div class="button_area">
+            <div>ここに履歴をだしたかった</div>
+            <div class="button_s">
+                <button type="button" id="register">作業登録</button>
+                <button id="move">別の人の画面に移動</button>
+            </div>
+        </div>
+    </div>
 
     <script type="module" src="/js/main2.js"></script>
 </body>
